@@ -7,11 +7,9 @@ export function useApp() {
 }
 
 export function AppProvider({ children }) {
-    const [currentCalc, updateCurrentCalc] = useState('Hello there');
+    const [currentVal, updateCurrentVal] = useState('Hello there');
 
     return (
-        <AppContext.Provider value={currentCalc}>
-            {children}
-        </AppContext.Provider>
+        <AppContext.Provider value={currentVal}>{children}</AppContext.Provider>
     );
 }
