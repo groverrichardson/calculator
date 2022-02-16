@@ -7,7 +7,7 @@ export function useApp() {
 }
 
 export function AppProvider({ children }) {
-    const [currentCalc, updateCurrentCalc] = useState('');
+    const [currentCalc, updateCurrentCalc] = useState('Hello there');
 
     return (
         <AppContext.Provider value={currentCalc}>
