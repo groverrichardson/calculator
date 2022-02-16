@@ -2,8 +2,6 @@ import React from 'react';
 import Calculator from './components/calculator';
 import { AppProvider } from './AppContext';
 
-export const AppContext = React.createContext();
-
 function App() {
     return (
         <AppProvider>
