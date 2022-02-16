@@ -1,35 +1,50 @@
 import React from 'react';
 import {
-    useCurrentCalc,
     useCurrentVal,
+    useInstructions,
+    useReset,
     useUpdateCurrentCalc,
     useUpdateCurrentVal,
+    useUpdateInstructions,
+    useUpdateReset,
 } from '../AppContext';
 
 function CalcButton(props) {
-    const numbers = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']);
+    const numbers = new Set([
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '0',
+        '.',
+    ]);
     const updateCurrentVal = useUpdateCurrentVal();
     const currentVal = useCurrentVal();
-    const currentCalc = useCurrentCalc();
     const updateCurrentCalc = useUpdateCurrentCalc();
-
-    async function processCalc(type) {
-        if (type === 'add') {
-            const newValue = await updateCurrentCalc(currentCalc + currentVal);
-            updateCurrentVal(newValue);
-        }
-    }
+    const updateInstructions = useUpdateInstructions();
+    const reset = useReset();
+    const updateReset = useUpdateReset();
 
     function handleClick(e) {
         const input = e.target.value;
-        const newValue = currentVal === '0' ? input : currentVal + input;
+        const newValue =
+            currentVal === '0' || reset === true ? input : currentVal + input;
 
-        if (numbers.has(input)) updateCurrentVal(newValue);
-        if (input === '+') processCalc('add');
-        if (input === 'AC') {
-            updateCurrentVal('0');
-            updateCurrentCalc('');
+        updateReset(false);
+
+        if (numbers.has(input)) {
+            updateCurrentVal(newValue);
+            updateInstructions('inputting');
         }
+
+        if (input === '+') updateInstructions('add');
+        if (input === '=') updateInstructions('process');
+        if (input === 'AC') updateInstructions('clear');
     }
 
     return (
