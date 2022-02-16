@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../App';
+import React from 'react';
+import { useApp } from '../AppContext';
 
 function Display() {
-    const displayValue = useContext(AppContext);
+    const currentCalc = useApp();
+
+    console.log(currentCalc);
 
     return (
         <div className="Display text-right border-2 border-black py-5 px-5 bg-gray-700 text-white text-bold text-2xl">
-            {displayValue.currentCalc}
+            {currentCalc}
         </div>
     );
 }
