@@ -46,9 +46,9 @@ function Calculator() {
         if (instructions === 'multiply')
             updateCurrentCalc(calculate('multiply'));
         if (instructions === 'divide') updateCurrentCalc(calculate('divide'));
-        if (instructions === 'process' && iteration === 0)
+        if (instructions === 'process' && iteration >= 2)
             updateCurrentCalc(redoCalculate('process'));
-        if (instructions === 'process' && iteration !== 0)
+        if (instructions === 'process' && iteration <= 1)
             updateCurrentCalc(calculate('process'));
 
         if (instructions === 'clear') {
@@ -92,8 +92,6 @@ function Calculator() {
             `${currentCalc}${operation}${stagedVal}`
         );
 
-        updateCurrentVal('0');
-        updateCurrentCalc(currentVal);
         updateIteration((iteration) => iteration + 1);
         updateInstructions('calculated');
 
