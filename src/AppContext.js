@@ -10,6 +10,8 @@ export const StagedValContext = React.createContext();
 export const UpdateStagedValContext = React.createContext();
 export const ResetContext = React.createContext();
 export const UpdateResetContext = React.createContext();
+export const OperationContext = React.createContext();
+export const UpdateOperationContext = React.createContext();
 
 export function useCurrentVal() {
     return useContext(CurrentValContext);
@@ -51,12 +53,21 @@ export function useUpdateReset() {
     return useContext(UpdateResetContext);
 }
 
+export function useOperationContext() {
+    return useContext(OperationContext);
+}
+
+export function useUpdateOperationContext() {
+    return useContext(UpdateOperationContext);
+}
+
 export function AppProvider({ children }) {
     const [currentVal, updateCurrentVal] = useState('0');
-    const [currentCalc, updateCurrentCalc] = useState([]);
+    const [currentCalc, updateCurrentCalc] = useState('0');
     const [instructions, updateInstructions] = useState('wait');
     const [stagedVal, updateStagedVal] = useState('0');
     const [reset, updateReset] = useState(false);
+    const [operation, updateOperation] = useState('');
 
     return (
         <CurrentValContext.Provider value={currentVal}>
@@ -72,7 +83,13 @@ export function AppProvider({ children }) {
                                         <ResetContext.Provider value={reset}>
                                             <UpdateResetContext.Provider
                                                 value={updateReset}>
-                                                {children}
+                                                <OperationContext.Provider
+                                                    value={operation}>
+                                                    <UpdateOperationContext.Provider
+                                                        value={updateOperation}>
+                                                        {children}
+                                                    </UpdateOperationContext.Provider>
+                                                </OperationContext.Provider>
                                             </UpdateResetContext.Provider>
                                         </ResetContext.Provider>
                                     </UpdateStagedValContext.Provider>

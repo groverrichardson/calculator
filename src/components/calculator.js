@@ -5,11 +5,13 @@ import {
     useCurrentCalc,
     useCurrentVal,
     useInstructions,
+    useOperationContext,
     useReset,
     useStagedVal,
     useUpdateCurrentCalc,
     useUpdateCurrentVal,
     useUpdateInstructions,
+    useUpdateOperationContext,
     useUpdateReset,
     useUpdateStagedVal,
 } from '../AppContext';
@@ -25,31 +27,77 @@ function Calculator() {
     const stagedVal = useStagedVal();
     const updateStagedVal = useUpdateStagedVal();
     const updateReset = useUpdateReset();
+    const reset = useReset();
+    const operation = useOperationContext();
+    const updateOperation = useUpdateOperationContext();
 
     const calculation = evaluate(`${currentVal} + ${stagedVal}`);
+    const operations = new Set('add', 'subtract', 'multiply', 'divide');
+    const [iteration, updateIteration] = useState(0);
 
     useEffect(() => {
         console.log(
-            `instructions: ${instructions}, currentVal: ${currentVal}, stagedVal: ${stagedVal}. currentCalc: ${currentCalc}`
+            `instructions: ${instructions}, currentVal: ${currentVal}, stagedVal: ${stagedVal}. currentCalc: ${currentCalc}, reset: ${reset}, iteration: ${iteration}, operation: ${operation}`
         );
-        if (instructions === 'add') {
-            updateStagedVal(calculate);
-            updateReset(true);
-        }
+
+        if (instructions === 'add') updateCurrentCalc(calculate('add'));
+        if (instructions === 'subtract')
+            updateCurrentCalc(calculate('subtract'));
+        if (instructions === 'multiply')
+            updateCurrentCalc(calculate('multiply'));
+        if (instructions === 'divide') updateCurrentCalc(calculate('divide'));
+        if (instructions === 'process' && iteration === 0)
+            updateCurrentCalc(redoCalculate('process'));
+        if (instructions === 'process' && iteration !== 0)
+            updateCurrentCalc(calculate('process'));
 
         if (instructions === 'clear') {
             updateCurrentVal('0');
-            updateCurrentCalc('');
+            updateCurrentCalc('0');
             updateStagedVal('0');
+            updateIteration(0);
+            updateOperation('');
         }
     });
 
-    function calculate() {
-        const calculation = evaluate(`${currentVal} + ${stagedVal}`);
+    function calculate(type) {
+        if (type === 'add') updateOperation('+');
+        if (type === 'subtract') updateOperation('-');
+        if (type === 'multiply') updateOperation('*');
+        if (type === 'divide') updateOperation('/');
+
+        if (iteration === 0) {
+            updateStagedVal(currentVal);
+            updateCurrentVal('0');
+            updateCurrentCalc(currentVal);
+            updateIteration((iteration) => iteration + 1);
+            updateInstructions('calculated');
+
+            return currentVal;
+        }
+
+        const calculation = evaluate(`${currentCalc}${operation}${currentVal}`);
+
+        updateStagedVal(currentVal);
         updateCurrentVal('0');
+        updateCurrentCalc(currentVal);
+        updateIteration((iteration) => iteration + 1);
         updateInstructions('calculated');
 
         return calculation;
+    }
+
+    function redoCalculate(type) {
+        const redoCalculation = evaluate(
+            `${currentCalc}${operation}${stagedVal}`
+        );
+
+        updateCurrentVal('0');
+        updateCurrentCalc(currentVal);
+        updateIteration((iteration) => iteration + 1);
+        updateInstructions('calculated');
+
+        return redoCalculation;
     }
 
     return (

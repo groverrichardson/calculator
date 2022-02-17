@@ -43,6 +43,9 @@ function CalcButton(props) {
         }
 
         if (input === '+') updateInstructions('add');
+        if (input === '-') updateInstructions('subtract');
+        if (input === '×') updateInstructions('multiply');
+        if (input === '÷') updateInstructions('divide');
         if (input === '=') updateInstructions('process');
         if (input === 'AC') updateInstructions('clear');
     }
