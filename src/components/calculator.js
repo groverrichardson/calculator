@@ -2,18 +2,25 @@ import React, { useEffect, useReducer, useState } from 'react';
 import OperationButton from './operationButton';
 import DigitButton from './digitButton';
 import Display from './display';
+import { trueDependencies } from 'mathjs';
 
 export const ACTIONS = {
     ADD_DIGIT: 'add-digit',
     CHOOSE_OPERATION: 'choose-operation',
     CLEAR: 'clear',
-    DELETE_DIGIT: 'delete-digit',
     EVALUATE: 'evaluate',
 };
 
 function reducer(state, { type, payload }) {
     switch (type) {
         case ACTIONS.ADD_DIGIT:
+            if (state.overwrite) {
+                return {
+                    ...state,
+                    currentOperand: payload.digit,
+                    overwrite: false,
+                };
+            }
             if (payload.digit === '0' && state.currentOperand === '0')
                 return state;
             if (payload.digit === '.' && state.currentOperand.includes('.'))
@@ -61,6 +68,7 @@ function reducer(state, { type, payload }) {
 
             return {
                 ...state,
+                overwrite: true,
                 previousOperand: null,
                 operation: null,
                 currentOperand: evaluate(state),
