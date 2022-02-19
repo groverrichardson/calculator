@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import OperationButton from './operationButton';
 import DigitButton from './digitButton';
 import Display from './display';
+import { evaluate } from 'mathjs';
 
 export const ACTIONS = {
     ADD_DIGIT: 'add-digit',
@@ -14,11 +15,61 @@ export const ACTIONS = {
 function reducer(state, { type, payload }) {
     switch (type) {
         case ACTIONS.ADD_DIGIT:
+            if (payload.digit === '0' && state.currentOperand === '0')
+                return state;
+            if (payload.digit === '.' && state.currentOperand.includes('.'))
+                return state;
+
             return {
                 ...state,
                 currentOperand: `${state.currentOperand || ''}${payload.digit}`,
             };
+        case ACTIONS.CHOOSE_OPERATION:
+            if (state.currentOperand == null && state.previousOperand == null) {
+                return state;
+            }
+            if (state.previousOperand == null) {
+                return {
+                    ...state,
+                    operation: payload.operation,
+                    previousOperand: state.currentOperand,
+                    currentOperand: null,
+                };
+            }
+
+            return {
+                ...state,
+                previousOperand: evaluate(state),
+                operation: payload.operation,
+                currentOperand: null,
+            };
+        case ACTIONS.CLEAR:
+            return {};
     }
+}
+
+function evaluate({ currentOperand, previousOperand, operation }) {
+    const prev = parseFloat(previousOperand);
+    const current = parseFloat(previousOperand);
+
+    if (isNaN(prev) || isNaN(current)) return '';
+    let computation = '';
+    switch (operation) {
+        case '+':
+            computation = prev + current;
+            break;
+        case '-':
+            computation = prev - current;
+            break;
+        case '*':
+            computation = prev * current;
+            break;
+        case '÷':
+            computation = prev / current;
+            break;
+    }
+
+    return computation.toString();
 }
 
 function Calculator() {
@@ -33,11 +84,11 @@ function Calculator() {
                 operation={operation}
             />
             <div className="calc-button-group grid grid-cols-4">
-                <OperationButton
-                    classes="clear bg-gray-500"
-                    operation="AC"
-                    dispatch={dispatch}
-                />
+                <button
+                    className="clear bg-gray-500"
+                    onClick={() => dispatch({ type: ACTIONS.CLEAR })}>
+                    AC
+                </button>
                 <OperationButton
                     classes="pos-neg bg-gray-500"
                     operation="+/-"
@@ -126,9 +177,9 @@ function Calculator() {
                     digit="0"
                     dispatch={dispatch}
                 />
-                <OperationButton
+                <DigitButton
                     classes="division bg-gray-400"
-                    operation="."
+                    digit="."
                     dispatch={dispatch}
                 />
                 <OperationButton
