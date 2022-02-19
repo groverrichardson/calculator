@@ -16,7 +16,7 @@ function reducer(state, { type, payload }) {
         case ACTIONS.ADD_DIGIT:
             return {
                 ...state,
-                currentOperand: `${payload.digit}`,
+                currentOperand: `${state.currentOperand || ''}${payload.digit}`,
             };
     }
 }
