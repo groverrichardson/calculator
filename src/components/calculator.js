@@ -1,43 +1,140 @@
-import React, { useEffect, useState } from 'react';
-import CalcButton from './calcButton';
+import React, { useEffect, useReducer, useState } from 'react';
+import OperationButton from './operationButton';
+import DigitButton from './digitButton';
 import Display from './display';
 
-function Calculator() {
-    let currentValue = 0;
-    let prevValue = 0;
+export const ACTIONS = {
+    ADD_DIGIT: 'add-digit',
+    CHOOSE_OPERATION: 'choose-operation',
+    CLEAR: 'clear',
+    DELETE_DIGIT: 'delete-digit',
+    EVALUATE: 'evaluate',
+};
 
-    function calculate() {}
+function reducer(state, { type, payload }) {
+    switch (type) {
+        case ACTIONS.ADD_DIGIT:
+            return {
+                ...state,
+                currentOperand: `${payload.digit}`,
+            };
+    }
+}
+
+function Calculator() {
+    const [{ currentOperand, previousOperand, operation }, dispatch] =
+        useReducer(reducer, {});
+
     return (
         <div className="Calculator">
-            <Display />
+            <Display
+                currentOperand={currentOperand}
+                previousOperand={previousOperand}
+            />
             <div className="calc-button-group grid grid-cols-4">
-                <CalcButton classes="clear bg-gray-500" display="AC" />
-                <CalcButton classes="pos-neg bg-gray-500" display="+/-" />
-                <CalcButton classes="percentage bg-gray-500" display="%" />
-                <CalcButton classes="division bg-orange-400" display="÷" />
+                <OperationButton
+                    classes="clear bg-gray-500"
+                    operation="AC"
+                    dispatch={dispatch}
+                />
+                <OperationButton
+                    classes="pos-neg bg-gray-500"
+                    operation="+/-"
+                    dispatch={dispatch}
+                />
+                <OperationButton
+                    classes="percentage bg-gray-500"
+                    operation="%"
+                    dispatch={dispatch}
+                />
+                <OperationButton
+                    classes="division bg-orange-400"
+                    operation="÷"
+                    dispatch={dispatch}
+                />
             </div>
             <div className="calc-button-group grid grid-cols-4">
-                <CalcButton classes="division bg-gray-400" display="7" />
-                <CalcButton classes="division bg-gray-400" display="8" />
-                <CalcButton classes="division bg-gray-400" display="9" />
-                <CalcButton classes="division bg-orange-400" display="×" />
+                <DigitButton
+                    classes="division bg-gray-400"
+                    digit="7"
+                    dispatch={dispatch}
+                />
+                <DigitButton
+                    classes="division bg-gray-400"
+                    digit="8"
+                    dispatch={dispatch}
+                />
+                <DigitButton
+                    classes="division bg-gray-400"
+                    digit="9"
+                    dispatch={dispatch}
+                />
+                <OperationButton
+                    classes="division bg-orange-400"
+                    operation="×"
+                    dispatch={dispatch}
+                />
             </div>
             <div className="calc-button-group grid grid-cols-4">
-                <CalcButton classes="division bg-gray-400" display="4" />
-                <CalcButton classes="division bg-gray-400" display="5" />
-                <CalcButton classes="division bg-gray-400" display="6" />
-                <CalcButton classes="division bg-orange-400" display="-" />
+                <DigitButton
+                    classes="division bg-gray-400"
+                    digit="4"
+                    dispatch={dispatch}
+                />
+                <DigitButton
+                    classes="division bg-gray-400"
+                    digit="5"
+                    dispatch={dispatch}
+                />
+                <DigitButton
+                    classes="division bg-gray-400"
+                    digit="6"
+                    dispatch={dispatch}
+                />
+                <OperationButton
+                    classes="division bg-orange-400"
+                    operation="-"
+                    dispatch={dispatch}
+                />
             </div>
             <div className="calc-button-group grid grid-cols-4">
-                <CalcButton classes="division bg-gray-400" display="1" />
-                <CalcButton classes="division bg-gray-400" display="2" />
-                <CalcButton classes="division bg-gray-400" display="3" />
-                <CalcButton classes="division bg-orange-400" display="+" />
+                <DigitButton
+                    classes="division bg-gray-400"
+                    digit="1"
+                    dispatch={dispatch}
+                />
+                <DigitButton
+                    classes="division bg-gray-400"
+                    digit="2"
+                    dispatch={dispatch}
+                />
+                <DigitButton
+                    classes="division bg-gray-400"
+                    digit="3"
+                    dispatch={dispatch}
+                />
+                <OperationButton
+                    classes="division bg-orange-400"
+                    operation="+"
+                    dispatch={dispatch}
+                />
             </div>
             <div className="calc-button-group grid grid-cols-4">
-                <CalcButton classes="col-span-2 bg-gray-400" display="0" />
-                <CalcButton classes="division bg-gray-400" display="." />
-                <CalcButton classes="division bg-orange-400" display="=" />
+                <DigitButton
+                    classes="col-span-2 bg-gray-400"
+                    digit="0"
+                    dispatch={dispatch}
+                />
+                <OperationButton
+                    classes="division bg-gray-400"
+                    operation="."
+                    dispatch={dispatch}
+                />
+                <OperationButton
+                    classes="division bg-orange-400"
+                    operation="="
+                    dispatch={dispatch}
+                />
             </div>
         </div>
     );
