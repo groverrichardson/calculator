@@ -30,6 +30,7 @@ function Calculator() {
             <Display
                 currentOperand={currentOperand}
                 previousOperand={previousOperand}
+                operation={operation}
             />
             <div className="calc-button-group grid grid-cols-4">
                 <OperationButton
