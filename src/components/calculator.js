@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useState } from 'react';
 import OperationButton from './operationButton';
 import DigitButton from './digitButton';
 import Display from './display';
-import { evaluate } from 'mathjs';
 
 export const ACTIONS = {
     ADD_DIGIT: 'add-digit',
