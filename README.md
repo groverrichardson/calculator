@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# Calculator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a sample calculator that users can use to calculate simple equations. It was designed to be clean, simple, and easy to use.
 
-## Available Scripts
+[Live Demo](https://calculator-six-tau.vercel.app/)
 
-In the project directory, you can run:
+## Tech/Framework Used
 
-### `npm start`
+Built with:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-   React
+-   Tailwind
+-   Sass
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+Here is a quick guide on how to get this form up and running.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Cloning the repository
 
-### `npm run build`
+1. Above the list of files on this Repo, click **Code**.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ <img src='readme_images/code-button.png'>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. To clone the repository using HTTPS, under "Clone with HTTPS", click the clipboard icon to the right of the URL. To clone the repository using an SSH key, including a certificate issued by your organization's SSH certificate authority, click Use SSH, then click the clickboard icon to the right of the URL. To clone a repository using GitHub CLI, click **Use GitHub CLI**, then click the clickboard icon to the right of the URL.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ <img src='readme_images/https-url-clone.png'>
+ <img src='readme_images/https-url-clone-cli.png'>
 
-### `npm run eject`
+3. Open Terminal.
+4. Change the current working directory to the location where you want the cloned directory.
+5. Type `git clone`, and then paste the URL you copied earlier.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    `$ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+6. Press **Enter** to create your local clone.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+$ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+> Cloning into `Spoon-Knife`...
+> remote: Counting objects: 10, done.
+> remote: Compressing objects: 100% (8/8), done.
+> remove: Total 10 (delta 1), reused 10 (delta 1)
+> Unpacking objects: 100% (10/10), done.
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Running Application
 
-## Learn More
+Navigate to the your newly cloned repository and enter `npm start` into terminal to run.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Credits
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Thank you to the awesome team at Fetch Rewards for this amazing opportunity. I couldn't have done it without you!
